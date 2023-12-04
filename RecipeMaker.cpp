@@ -60,6 +60,19 @@ public:
     string getBuyList(){
         return BuyList;
     }
+    
+    void print(const string& str){
+        cout << str << endl << endl;
+    }
+
+    void print(const vector<string>& strs){
+
+        for(const auto& c : strs){
+            std::cout << c << std::endl;
+        }
+        std::cout << std::endl;
+        
+    }
 
     string recomend_menu(int N = 5) {
         json requestData;
@@ -78,19 +91,6 @@ public:
         string RecommendMenu = response["choices"][0]["message"]["content"].get<std::string>();
         return RecommendMenu;
         //cout << Recipe << endl;
-    }
-
-    void print(const string& str){
-        cout << str << endl << endl;
-    }
-
-    void print(const vector<string>& strs){
-
-        for(const auto& c : strs){
-            std::cout << c << std::endl;
-        }
-        std::cout << std::endl;
-        
     }
 
     void GenerageRecipe() {
@@ -168,7 +168,7 @@ public:
     void DietRecommend() {
         string recommendedMenu;
         int N = days-1;
-        recommendedMenu += recomend_menu(N);
+        if(N != 1) recommendedMenu += recomend_menu(N);
 
         std::stringstream ss(recommendedMenu);
         std::string line;
@@ -235,12 +235,13 @@ public:
 
     void saveRecipeToFile(int is_List){
         std::ofstream file("식단표.txt");
-        if(is_List == 2){
+        if(is_List != 2){
             file << "<<<<<장바구니>>>>>" << std::endl; 
 
             size_t pos;
             while ((pos = BuyList.find("\n\n")) != std::string::npos) {
-                BuyList.erase(pos, 2); // 1개의 문자를 삭제합니다.
+                std::cout << "Found at position: " << pos << std::endl;
+                BuyList.erase(pos, 1); // 1개의 문자를 삭제합니다.
             }
 
             if (file.is_open()) {
