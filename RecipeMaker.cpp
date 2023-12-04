@@ -233,23 +233,25 @@ public:
         system(sys_cmd.c_str());
     }
 
-    void saveRecipeToFile(){
+    void saveRecipeToFile(int is_List){
         std::ofstream file("식단표.txt");
-        file << "<<<<<장바구니>>>>>" << std::endl; 
+        if(is_List == 2){
+            file << "<<<<<장바구니>>>>>" << std::endl; 
 
-        size_t pos;
-        while ((pos = BuyList.find("\n")) != std::string::npos) {
-            BuyList.erase(pos, 1); // 1개의 문자를 삭제합니다.
+            size_t pos;
+            while ((pos = BuyList.find("\n\n")) != std::string::npos) {
+                BuyList.erase(pos, 2); // 1개의 문자를 삭제합니다.
+            }
+
+            if (file.is_open()) {
+                file << BuyList << std::endl; 
+                std::cout << "장바구니 저장 완료" << std::endl;
+            } else {
+                std::cout << "파일을 열 수 없습니다." << std::endl;
+            }
         }
 
-        if (file.is_open()) {
-            file << BuyList << std::endl; 
-            std::cout << "장바구니 저장 완료" << std::endl;
-        } else {
-            std::cout << "파일을 열 수 없습니다." << std::endl;
-        }
         file << std::endl << std::endl << "<<<<<레시피>>>>>" << std::endl; 
-
 
         if (file.is_open()) {
             for (const auto& line : RecipeArray) {
@@ -360,8 +362,8 @@ int main() {
                 controLL = 0;
             }
             else if(response == "N"){
+                controLL = 2;
                 break;
-                controLL = 0;
             }
             else{
                 std::cout << "(Y/N) 중에 골라 주세요" << std::endl;
@@ -372,16 +374,15 @@ int main() {
 
         std::cout << "레시피와 장바구니 리스트를 파일로 저장해 드릴까요? (Y/N)" << std::endl << std::endl;
         getline(cin, response);
-        controLL = 1;
-        while(controLL == 1){
+        int control3 = 1;
+        while(control3 == 1){
             if(response == "Y")
             {
-                helper.saveRecipeToFile();
-                controLL = 0;
+                helper.saveRecipeToFile(controLL);
+                control3 = 0;
             }
             else if(response == "N"){
                 return 0;
-                controLL = 0;
             }
             else{
                 std::cout << "(Y/N) 중에 골라 주세요" << std::endl;
