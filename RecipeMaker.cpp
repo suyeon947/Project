@@ -1,4 +1,4 @@
-#include <iostream>
+    #include <iostream>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -74,7 +74,7 @@ public:
         
     }
 
-    string recomend_menu(int N = 5) {
+    string recommend_menu(int N = 5) {
         json requestData;
         string num = to_string(N);
         requestData["model"] = "gpt-3.5-turbo";
@@ -94,7 +94,7 @@ public:
         //cout << Recipe << endl;
     }
 
-    void GenerageRecipe(const string& menu) {
+    void GenerateRecipe(const string& menu) {
         
         json requestData;
         requestData["model"] = "gpt-4-1106-preview";
@@ -151,14 +151,14 @@ public :
 
     void GenerateDietPlan() {
         string recommendedMenu;
-        recommendedMenu = recomend_menu(days);
+        recommendedMenu = recommend_menu(days);
         setMenu(recommendedMenu);
         //cout << "메뉴들\n" << recommendedMenu << endl;
 
         std::stringstream ss(recommendedMenu);
         std::string line;
         while (std::getline(ss, line, '\n')) {
-            GenerageRecipe(line);
+            GenerateRecipe(line);
         }
     }
     
@@ -367,7 +367,7 @@ int main() {
                 h_helper.setTaste(Info.getTaste());
 
                 std::cout << "냉장고 속 재료 정보 및 사용자 정보를 통해 도출된 추천 메뉴 입니다." << std::endl;
-                Recommend = h_helper.recomend_menu();
+                Recommend = h_helper.recommend_menu();
                 h_helper.print(Recommend);
                 std::cout << std::endl;
 
