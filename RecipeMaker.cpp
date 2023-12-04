@@ -60,7 +60,7 @@ public:
     string getBuyList(){
         return BuyList;
     }
-    
+
     void print(const string& str){
         cout << str << endl << endl;
     }
@@ -241,7 +241,7 @@ public:
             size_t pos;
             while ((pos = BuyList.find("\n\n")) != std::string::npos) {
                 std::cout << "Found at position: " << pos << std::endl;
-                BuyList.erase(pos, 1); // 1개의 문자를 삭제합니다.
+                BuyList.erase(pos, 2); // 1개의 문자를 삭제합니다.
             }
 
             if (file.is_open()) {
